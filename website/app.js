@@ -1,10 +1,10 @@
 /* Global Variables */
 const baseurl = 'http://api.openweathermap.org/data/2.5/weather?q=';
-const apiKey = '&appid=0aee2a707a96c507eb8926ba5e91afd8';
+const apiKey = '&appid=0aee2a707a96c507eb8926ba5e91afd8&units=metric';
 let zipCode = '';
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
 
 const getWeather = async(url = '', zcode = '', apik = '') => {
     const response = await fetch(url + zcode + apik);
@@ -45,7 +45,7 @@ document.getElementById('generate').addEventListener('click', function() {
     let resval = document.getElementById('feelings').value;
     getWeather(baseurl, zipval, apiKey)
         .then(function(data) {
-            postData('/save', { temp: data.main.temp, date: newDate, userres: resval });
+            postData('/save', { temp: data.main.temp + ' °C', date: newDate, userres: resval });
             updateUIData();
         })
 });
